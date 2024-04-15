@@ -1,6 +1,7 @@
 package client;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -95,6 +96,16 @@ public class TestCommandStructure {
         return Arguments.of(allocate.array());
     }
 
+    @DisplayName("Передача в команду (B) значения, соответствующего структуре команды, не генерирует какие-либо исключения.")
+    @ParameterizedTest
+    @MethodSource("getValidCommandSource")
+    public void testDeserializeWithoutError(byte[] value, String[] expectedValue) {
+        ADBackendCommand command = new ADBackendCommand(value);
+        command.deserialize();
+        Assertions.assertDoesNotThrow(command::deserialize, "check error message");
+    }
+
+    @DisplayName("Значения десериализованной команды (B) соответствуют заданным значениям.")
     @ParameterizedTest
     @MethodSource("getValidCommandSource")
     public void testCommandStructure(byte[] value, String[] expectedValue) {
@@ -109,6 +120,7 @@ public class TestCommandStructure {
         Assertions.assertEquals(expectedValue[2].length(), command.getPassword().length(), "Password length");
     }
 
+    @DisplayName("Передача в команду (B) значения, не соответствующего структуре команды, генерирует исключение ”Deserialization error”.")
     @ParameterizedTest
     @MethodSource("getNotValidCommandSource")
     public void testCommandNotValidStructure(byte[] value) {
