@@ -41,7 +41,7 @@ public class TestCommandValidator {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"AA", "BB", "AB", "CA", "ZZ"})
+    @ValueSource(strings = {"HH", "BB", "AB", "CA", "ZZ"})
     public void testCommandType(String commandType) {
         BackendCommand command = new BackendCommand(commandType.getBytes());
         BackendCommandProcessor commandProcessor = new BackendCommandProcessor(List.of(new CommandTypeValidator()));
@@ -49,7 +49,7 @@ public class TestCommandValidator {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"aA", "Aa", "1A", "A1", "aa", "00"})
+    @ValueSource(strings = {"aA", "Aa", "1A", "A1", "aa", "00", ". ", "!п", "гг"})
     public void testNotValidCommandType(String commandType) {
         BackendCommand command = new BackendCommand(commandType.getBytes());
         BackendCommandProcessor commandProcessor = new BackendCommandProcessor(List.of(new CommandTypeValidator()));
