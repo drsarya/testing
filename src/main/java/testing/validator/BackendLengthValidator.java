@@ -1,6 +1,4 @@
-package testing.validator.backend;
-
-import testing.validator.Validator;
+package testing.validator;
 
 public class BackendLengthValidator implements Validator {
 

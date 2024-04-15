@@ -1,6 +1,6 @@
 package testing.validator;
 
-public interface Validator  {
+public interface Validator {
 
     void validate(byte[] value);
 }

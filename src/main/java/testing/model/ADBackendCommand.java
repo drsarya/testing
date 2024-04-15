@@ -26,21 +26,25 @@ public class ADBackendCommand extends BackendCommand {
     }
 
     public void deserialize() {
-        ByteBuffer buffer = ByteBuffer.wrap(this.getValue());
+        try {
+            ByteBuffer buffer = ByteBuffer.wrap(this.getValue());
 
-        char symbol1 = buffer.getChar();
-        char symbol2 = buffer.getChar();
+            char symbol1 = buffer.getChar();
+            char symbol2 = buffer.getChar();
 
-        int usernameLength = buffer.getInt();
-        byte[] usernameArray = new byte[usernameLength];
-        buffer.get(usernameArray);
+            int usernameLength = buffer.getInt();
+            byte[] usernameArray = new byte[usernameLength];
+            buffer.get(usernameArray);
 
-        int passwordLength = buffer.getInt();
-        byte[] passwordArray = new byte[passwordLength];
-        buffer.get(passwordArray);
+            int passwordLength = buffer.getInt();
+            byte[] passwordArray = new byte[passwordLength];
+            buffer.get(passwordArray);
 
-        this.commandType = String.valueOf(new char[]{symbol1, symbol2});
-        this.username = new String(usernameArray, StandardCharsets.UTF_8);
-        this.password = new String(passwordArray, StandardCharsets.UTF_8);
+            this.commandType = String.valueOf(new char[]{symbol1, symbol2});
+            this.username = new String(usernameArray, StandardCharsets.UTF_8);
+            this.password = new String(passwordArray, StandardCharsets.UTF_8);
+        } catch (Exception | Error e) {
+            throw new RuntimeException("Deserialization error: " + e.getMessage());
+        }
     }
 }

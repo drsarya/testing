@@ -7,25 +7,12 @@ import org.junit.jupiter.params.provider.ValueSource;
 import testing.model.BackendCommand;
 import testing.model.Command;
 import testing.service.BackendCommandProcessor;
+import testing.validator.BackendLengthValidator;
 import testing.validator.CommandTypeValidator;
-import testing.validator.backend.BackendLengthValidator;
 
 import java.util.List;
 
-public class TestCommand {
-
-    @Test
-    public void testBackendNullCommandValue() {
-        Exception exception = Assertions.assertThrows(Exception.class, () -> new BackendCommand(null), "null command value");
-        Assertions.assertEquals(NullPointerException.class, exception.getClass(), "check error class");
-    }
-
-    @Test
-    public void testBackendCommandValue() {
-        Command command = new Command(new byte[1]) {
-        };
-        Assertions.assertTrue(command.getValue() instanceof byte[], "command is byte array");
-    }
+public class TestCommandValidator {
 
     @ParameterizedTest
     @ValueSource(ints = {0, 1, 2, 3})
@@ -69,5 +56,4 @@ public class TestCommand {
         Exception exception = Assertions.assertThrows(Exception.class, () -> commandProcessor.validateCommand(command), "not valid command type");
         Assertions.assertEquals("Error. Wrong command type", exception.getMessage(), "check error message");
     }
-
 }

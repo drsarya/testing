@@ -1,6 +1,5 @@
 package testing.service;
 
-import testing.model.ADBackendCommand;
 import testing.model.BackendCommand;
 import testing.validator.Validator;
 
@@ -17,5 +16,4 @@ public class BackendCommandProcessor {
     public void validateCommand(BackendCommand backendCommand) {
         validators.forEach(validator -> validator.validate(backendCommand.getValue()));
     }
-
 }
